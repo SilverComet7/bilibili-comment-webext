@@ -19,9 +19,9 @@ function copyComment(comment: string) {
       Open Options
     </button>
     <div class="mt-2">
-      <div class="opacity-0">
+      <!-- <div class="opacity-0">
         Storage:{{ storageDemo[0].tabName }}
-      </div>
+      </div> -->
       <div v-for="(item) in storageDemo" :key="item.tabName" class="my-2">
         <div v-for="(subItem) in item.children" :key="subItem.comment" class="my-2">
           {{ subItem.comment }}:
