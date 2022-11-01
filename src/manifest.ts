@@ -13,6 +13,7 @@ export async function getManifest() {
     name: pkg.displayName || pkg.name,
     version: pkg.version,
     description: pkg.description,
+
     action: {
       default_icon: './assets/icon-512.png',
       default_popup: './dist/popup/index.html',
@@ -33,7 +34,9 @@ export async function getManifest() {
       'tabs',
       'storage',
       'activeTab',
+      'scripting',
     ],
+    homepage_url: 'https://github.com/SilverComet7/bilibili-comment',
     host_permissions: ['*://*/*'],
     content_scripts: [
       {

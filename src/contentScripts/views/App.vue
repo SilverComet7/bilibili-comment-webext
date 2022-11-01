@@ -12,7 +12,7 @@ const [show, toggle] = useToggle(false)
       p="x-4 y-2"
       m="y-auto r-2"
       transition="opacity duration-300"
-      :class="show ? 'opacity-100' : 'opacity-0'"
+      :class="show ? 'opacity-100' : 'opacity-50'"
     >
       Vitesse WebExt
     </div>

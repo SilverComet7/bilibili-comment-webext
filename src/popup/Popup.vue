@@ -1,18 +1,15 @@
 <script setup lang="ts">
-// import { useClipboard } from '@vueuse/core'
+import { useClipboard } from '@vueuse/core'
 import { storageDemo } from '~/logic/storage'
-const showCopyWord = ref('123')
-
 function openOptionsPage() {
   browser.runtime.openOptionsPage()
 }
 
 function copyComment(comment: string) {
+  // 获取当前页面up名
   const replacedComment = comment.replace('XX', '九川')
-  showCopyWord.value = replacedComment
-  // const { text, copy, copied, isSupported } = useClipboard({ source: replacedComment })
-  // console.log('🚀 ~ file: Popup.vue ~ line 15 ~ copy ~ text, copy, copied, isSupported ', text, copied, isSupported)
-  // copy()
+  const { copy } = useClipboard({ source: replacedComment })
+  copy()
 }
 </script>
 
@@ -22,7 +19,6 @@ function copyComment(comment: string) {
       Open Options
     </button>
     <div class="mt-2">
-      {{ showCopyWord }}
       <div class="opacity-0">
         Storage:{{ storageDemo[0].tabName }}
       </div>
