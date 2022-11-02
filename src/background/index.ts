@@ -17,6 +17,9 @@ let previousTabId = 0
 // communication example: send previous tab title from background page
 // see shim.d.ts for type declaration
 browser.tabs.onActivated.addListener(async ({ tabId }) => {
+  console.log(tabId)
+  console.log(previousTabId)
+
   if (!previousTabId) {
     previousTabId = tabId
     return
@@ -35,7 +38,6 @@ browser.tabs.onActivated.addListener(async ({ tabId }) => {
   // eslint-disable-next-line no-console
   console.log('previous tab', tab)
   sendMessage('tab-prev', { title: tab.title }, { context: 'content-script', tabId })
-  // sendMessage('dom', { text: tab.title }, { context: 'popup', tabId })
 })
 
 onMessage('get-current-tab', async () => {

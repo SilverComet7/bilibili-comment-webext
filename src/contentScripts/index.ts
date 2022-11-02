@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { onMessage } from 'webext-bridge'
+import { onMessage, sendMessage } from 'webext-bridge'
 import { createApp } from 'vue'
 import App from './views/App.vue'
 
@@ -8,13 +8,12 @@ import App from './views/App.vue'
   console.info('[vitesse-webext] Hello world from content script')
 
   // communication example: send previous tab title from background page
-  // onMessage('tab-prev', ({ data }) => {
-  //   console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
-  // })
+  onMessage('tab-prev', ({ data }) => {
+    console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
+  })
 
-  onMessage('getText', ({ data, sender }) => {
-    console.log(`[vitesse-webext] Navigate from page "${data}"`)
-    console.log(sender)
+  onMessage('getTextFromPopup', ({ data }) => {
+    console.log('接受到来自pop的信息', data)
   })
 
   // browser.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {

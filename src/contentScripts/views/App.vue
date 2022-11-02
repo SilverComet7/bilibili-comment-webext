@@ -3,8 +3,8 @@ import { useToggle } from '@vueuse/core'
 import 'virtual:windi.css'
 
 const [show, toggle] = useToggle(false)
-function toshow() {
-  console.log(browser)
+function getDom() {
+  console.log(document.body)
 }
 </script>
 
@@ -16,9 +16,9 @@ function toshow() {
       m="y-auto r-2"
       transition="opacity duration-300"
       :class="show ? 'opacity-100' : 'opacity-50'"
-      @click="toshow"
+      @click="getDom"
     >
-      Vitesse WebExt
+      获取当前页面Dom
     </div>
     <div
       class="flex w-10 h-10 rounded-full shadow cursor-pointer"

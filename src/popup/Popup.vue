@@ -10,13 +10,12 @@ function openOptionsPage() {
 
 async function copyComment(comment: string) {
   // 获取当前页面up名
-  const data = await sendMessage('getText', '测试', 'content-script')
-  console.log(data)
-  const replacedComment = comment.replace('XX', '九川')
-  console.log(replacedComment)
-
-  const { copy } = useClipboard({ source: replacedComment })
-  copy()
+  sendMessage('getTextFromPopup', '测试', 'content-script').then((res) => {
+    console.log(res)
+    // const replacedComment = comment.replace('XX', res)
+    // const { copy } = useClipboard({ source: replacedComment })
+    // copy()
+  })
 }
 </script>
 
