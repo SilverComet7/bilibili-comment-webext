@@ -3,6 +3,9 @@ import { useToggle } from '@vueuse/core'
 import 'virtual:windi.css'
 
 const [show, toggle] = useToggle(false)
+function toshow() {
+  console.log(browser)
+}
 </script>
 
 <template>
@@ -13,6 +16,7 @@ const [show, toggle] = useToggle(false)
       m="y-auto r-2"
       transition="opacity duration-300"
       :class="show ? 'opacity-100' : 'opacity-50'"
+      @click="toshow"
     >
       Vitesse WebExt
     </div>

@@ -3,18 +3,23 @@ import { onMessage } from 'webext-bridge'
 import { createApp } from 'vue'
 import App from './views/App.vue'
 
-console.log(document.getRootNode());
-// console.log(browser.runtime.sendMessage());
-
 // Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
 (() => {
   console.info('[vitesse-webext] Hello world from content script')
 
-  console.log(document.getRootNode())
   // communication example: send previous tab title from background page
-  onMessage('tab-prev', ({ data }) => {
-    console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
+  // onMessage('tab-prev', ({ data }) => {
+  //   console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
+  // })
+
+  onMessage('getText', ({ data, sender }) => {
+    console.log(`[vitesse-webext] Navigate from page "${data}"`)
+    console.log(sender)
   })
+
+  // browser.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
+  //   console.log(request, sender, sendResponse)
+  // })
 
   // mount component to context window
   const container = document.createElement('div')
