@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { sendMessage } from 'webext-bridge'
-import { storageDemo } from '~/logic/storage'
+import { onMessage, sendMessage } from 'webext-bridge'
+import { storageComments as storageDemo } from '~/logic/storage'
 function openOptionsPage() {
   browser.runtime.openOptionsPage()
 }
-// const bg = browser.extension.getBackgroundPage()
-// console.log(bg)
 
 async function copyComment(comment: string) {
   // 获取当前页面up名
-  sendMessage('getTextFromPopup', '测试', 'content-script').then((res) => {
-    console.log(res)
-    // const replacedComment = comment.replace('XX', res)
-    // const { copy } = useClipboard({ source: replacedComment })
-    // copy()
+  browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+    const tab = tabs[0]
+    sendMessage('getTextFromPopup', { title: tab.title, tabId: tab.id! }, { context: 'content-script', tabId: tab.id! })
+    onMessage('sendUpName', async (res) => {
+      console.log('content-script返回的', res)
+      const replacedComment = comment.replace('XX', res.data.upName)
+      const { copy } = useClipboard({ source: replacedComment })
+      copy()
+    })
   })
 }
 </script>
 
 <template>
-  <main class="w-[500px] px-4 py-5 text-center text-gray-700">
+  <main class="right-0   w-[800px] px-4 py-5 text-center text-gray-700">
     <button class="btn mt-2" @click="openOptionsPage">
       Open Options
     </button>

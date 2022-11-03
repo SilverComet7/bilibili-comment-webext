@@ -14,11 +14,8 @@ import App from './views/App.vue'
 
   onMessage('getTextFromPopup', ({ data }) => {
     console.log('接受到来自pop的信息', data)
+    sendMessage('sendUpName', { upName: '九川' }, 'popup')
   })
-
-  // browser.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
-  //   console.log(request, sender, sendResponse)
-  // })
 
   // mount component to context window
   const container = document.createElement('div')

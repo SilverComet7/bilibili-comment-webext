@@ -2,11 +2,6 @@ import type { Tabs } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 import { onMessage, sendMessage } from 'webext-bridge'
 
-// background.js
-// function test() {
-//   alert('我是background！')
-// }
-
 browser.runtime.onInstalled.addListener((): void => {
   // eslint-disable-next-line no-console
   console.log('Extension installed')
@@ -17,9 +12,6 @@ let previousTabId = 0
 // communication example: send previous tab title from background page
 // see shim.d.ts for type declaration
 browser.tabs.onActivated.addListener(async ({ tabId }) => {
-  console.log(tabId)
-  console.log(previousTabId)
-
   if (!previousTabId) {
     previousTabId = tabId
     return
