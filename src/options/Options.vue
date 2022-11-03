@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import { storageDemo } from '~/logic/storage'
-const upAliasList = reactive({ 落九川: '九川', XX鸟: '小橘子' })
+const upAliasList = reactive({ 落九川: '九川', XX鸟: '小橘子' }) // 别名列表
 </script>
 
 <template>

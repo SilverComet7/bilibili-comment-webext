@@ -11,7 +11,6 @@ import App from './views/App.vue'
   onMessage('tab-prev', ({ data }) => {
     console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
   })
-
   onMessage('getTextFromPopup', ({ data }) => {
     console.log('接受到来自pop的信息', data)
     sendMessage('sendUpName', { upName: '九川' }, 'popup')
