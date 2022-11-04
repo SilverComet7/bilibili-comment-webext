@@ -13,7 +13,7 @@ import App from './views/App.vue'
   })
   onMessage('getTextFromPopup', ({ data }) => {
     console.log('接受到来自pop的信息', data)
-    sendMessage('sendUpName', { upName: '九川' }, 'popup')
+    sendMessage('sendUpName', { upName: '小橘子' }, 'popup')
   })
 
   // mount component to context window
