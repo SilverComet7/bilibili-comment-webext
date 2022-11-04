@@ -9,6 +9,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import WindiCSS from 'vite-plugin-windicss'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import windiConfig from './windi.config'
 import { isDev, port, r } from './scripts/utils'
 import { MV3Hmr } from './vite-mv3-hmr'
@@ -36,6 +37,7 @@ export const sharedConfig: UserConfig = {
         },
       ],
       dts: r('src/auto-imports.d.ts'),
+      resolvers: [ElementPlusResolver()],
     }),
 
     // https://github.com/antfu/unplugin-vue-components
@@ -48,6 +50,7 @@ export const sharedConfig: UserConfig = {
         IconsResolver({
           componentPrefix: '',
         }),
+        ElementPlusResolver(),
       ],
     }),
 
