@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { TabPaneName } from 'element-plus'
-import { ElMessage, ElMessageBox, ElTabPane, ElTabs } from 'element-plus'
+import { ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
 import { useClipboard } from '@vueuse/core'
 import { onMessage, sendMessage } from 'webext-bridge'
-// import TableReward from '../components/TableReward.vue'
 import { storageComments as storageDemo } from '~/logic/storage'
 
 async function copyComment(comment: string) {
@@ -21,7 +20,7 @@ async function copyComment(comment: string) {
   })
 }
 
-function addComment(children) {
+function addComment(children: any[]) {
   ElMessageBox.prompt('Please input your 评论', 'Tip', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
@@ -37,8 +36,8 @@ function addComment(children) {
       })
     })
 }
-async function deleteComment(children, cIndex: number) {
-  await ElMessageBox.confirm(' 确认删除？', 'Tip', {
+function deleteComment(children: any[], cIndex: number) {
+  ElMessageBox.confirm(' 确认删除？', 'Tip', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
   })
@@ -49,7 +48,7 @@ async function deleteComment(children, cIndex: number) {
 
     })
 }
-const editableTabsValue = ref('2')
+const editableTabsValue = ref('土味情话')
 let tabIndex = 2
 const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
   if (action === 'add') {
@@ -86,47 +85,25 @@ const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
         }
       })
     }
-
     editableTabsValue.value = activeName
-
-    // storageDemo.value.splice(3, 1)
-    // storageDemo.value = tabs.filter(tab => tab.tabName !== targetName)
   }
-}
-
-const removeTab = (targetName: string) => {
-  console.log('remove')
-  const tabs = storageDemo.value
-  let activeName = editableTabsValue.value
-  if (activeName === targetName) {
-    tabs.forEach((tab, index) => {
-      if (tab.tabName === targetName) {
-        const nextTab = tabs[index + 1] || tabs[index - 1]
-        if (nextTab)
-          activeName = nextTab.tabName
-      }
-    })
-  }
-
-  editableTabsValue.value = activeName
-  storageDemo.value = tabs.filter(tab => tab.tabName !== targetName)
 }
 </script>
 
 <template>
-  <main class="w-[800px] h-[400px] px-4 py-5  ">
-    <ElTabs v-model="editableTabsValue" editable type="card" @edit="handleTabsEdit" @tab-remove="removeTab">
-      <ElTabPane v-for="(item, index) in storageDemo" :key="item.tabName" :label="item.tabName">
-        <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class=" white ">
+  <main class="w-[800px] h-[400px] overflow-scroll px-4 py-5">
+    <!-- <el-input v-mdeol="" /> -->
+    <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
+      <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
+        <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">
           <el-tooltip
-            class="box-item"
             effect="dark"
-            :content="Top Left prompts info"
-            placement="top-start"
+            :content="subItem.comment"
+            placement="bottom-end"
           >
-            <span class="max-w-96  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">{{ subItem.comment }}</span>
-          </el-tooltip></el-tooltip>
-          <button class="btn " @click="copyComment(subItem.comment)">
+            <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap"> {{ subIndex + 1 }}:  {{ subItem.comment }}</span>
+          </el-tooltip>
+          <button class="btn mx-1" @click="copyComment(subItem.comment)">
             复制
           </button>
           <button class="btn bg-red-500" @click="deleteComment(item.children, subIndex)">
