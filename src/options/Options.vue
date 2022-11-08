@@ -1,10 +1,11 @@
 <script setup lang="ts">
 // import { storageDemo } from '~/logic/storage'
-const upAliasList = reactive({ 落九川: '九川', XX鸟: '小橘子' }) // 别名列表
+const upAliasList = reactive({ 鱼香不吐司: '小橘子', 落九川: '九川' }) // 别名列表
 </script>
 
 <template>
   <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
+    别名:
     <div v-for="(value, key) in upAliasList" :key="value" class="my-2">
       {{ key }}---------{{ value }}
     </div>
