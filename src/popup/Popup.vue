@@ -6,22 +6,26 @@ import { onMessage, sendMessage } from 'webext-bridge'
 import { storageComments as storageDemo } from '~/logic/storage'
 
 async function copyComment(comment: string) {
-  // 获取当前页面up名
+  // 获取当前页面的id并发送请求
   browser.tabs.query({ active: true, currentWindow: true }).then(async (tabs) => {
     const tab = tabs[0]
-    await sendMessage('getTextFromPopup', { title: tab.title, tabId: tab.id! }, { context: 'content-script', tabId: tab.id! })
+    await sendMessage('getUpName', { title: tab.title, tabId: tab.id! }, { context: 'content-script', tabId: tab.id! })
   })
   onMessage('sendUpName', (res) => {
-    const upName: string = (res.data as any).upName
+    // 接受到当前up的名称
+    const upName: string = (res.data as any)?.upName
     const replacedComment = comment.replace('XX', upName)
     const { copy } = useClipboard({ source: replacedComment })
     copy()
-    ElMessage.warning({ message: `复制成功-----${replacedComment}`, duration: 2000 })
+    if (upName)
+      ElMessage.warning({ message: `复制成功-----${replacedComment}`, duration: 2000 })
+    else
+      ElMessage.error('未获取到当前页面up名字,请移动到具体播放页面')
   })
 }
 
 function addComment(children: any[]) {
-  ElMessageBox.prompt('Please input your 评论', 'Tip', {
+  ElMessageBox.prompt('Please input 评论', 'Tip', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
 
@@ -36,6 +40,7 @@ function addComment(children: any[]) {
       })
     })
 }
+
 function deleteComment(children: any[], cIndex: number) {
   ElMessageBox.confirm(' 确认删除？', 'Tip', {
     confirmButtonText: 'OK',
@@ -48,12 +53,12 @@ function deleteComment(children: any[], cIndex: number) {
 
     })
 }
+
+// tab操作
 const editableTabsValue = ref('土味情话')
-let tabIndex = 2
-const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
+const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add') => {
   if (action === 'add') {
-    const newTabName = `${++tabIndex}`
-    ElMessageBox.prompt('Please input your 分组名称', 'Tip', {
+    ElMessageBox.prompt('Please input 分组名称', 'Tip', {
       confirmButtonText: 'OK',
       cancelButtonText: 'Cancel',
 
@@ -63,7 +68,7 @@ const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
           tabName: value,
           children: [],
         })
-        editableTabsValue.value = newTabName
+        editableTabsValue.value = value
       })
       .catch(() => {
         ElMessage({
@@ -73,7 +78,7 @@ const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
       })
   }
   else if (action === 'remove') {
-    storageDemo.value.pop()
+    await ElMessageBox.confirm(`确认删除该分类--${targetName}`)
     const tabs = storageDemo.value
     let activeName = editableTabsValue.value
     if (activeName === targetName) {
@@ -86,13 +91,13 @@ const handleTabsEdit = (targetName: TabPaneName, action: 'remove' | 'add') => {
       })
     }
     editableTabsValue.value = activeName
+    storageDemo.value = tabs.filter(tab => tab.tabName !== targetName)
   }
 }
 </script>
 
 <template>
   <main class="w-[800px] h-[400px] overflow-scroll px-4 py-5">
-    <!-- <el-input v-mdeol="" /> -->
     <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
       <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
         <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">

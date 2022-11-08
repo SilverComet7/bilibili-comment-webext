@@ -11,9 +11,15 @@ import App from './views/App.vue'
   onMessage('tab-prev', ({ data }) => {
     console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
   })
-  onMessage('getTextFromPopup', ({ data }) => {
+  onMessage('getUpName', ({ data }) => {
     console.log('接受到来自pop的信息', data)
-    sendMessage('sendUpName', { upName: '小橘子' }, 'popup')
+    const bilibiliUpNameWrap = document.getElementsByClassName('username') as any // a标签
+    console.log(bilibiliUpNameWrap, bilibiliUpNameWrap.length, 'wrap')
+    let bilibiliUpName: string | undefined
+    if (bilibiliUpNameWrap.length) { // 类数组有值
+      bilibiliUpName = bilibiliUpNameWrap[0]?.innerText
+    }
+    sendMessage('sendUpName', { upName: bilibiliUpName }, 'popup')
   })
 
   // mount component to context window
