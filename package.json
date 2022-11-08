@@ -1,8 +1,8 @@
 {
-  "name": "vitesse-webext",
-  "displayName": "Vitesse WebExt",
+  "name": "bilibili-comment",
+  "displayName": "bilibili-comment",
   "version": "0.0.1",
-  "description": "[description]",
+  "description": "帮助用户快速筛选并使用评论模板进行评论,让喜爱的up迅速眼熟于你",
   "private": true,
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
