@@ -8,13 +8,39 @@ export const storageComments = useStorageLocal(
       children: [
         {
           comment:
-            'XX 今天顾客投诉我了 说我炒菜咸 厨师长把我的锅锤烂了 问我是不是盐不要钱 他不知道的是我没有多放盐 只是炒菜的时候很想你 眼泪掉进了锅里',
-          previewImgPath: 'xxx',
+            'XX 今天顾客投诉我了 说我炒菜咸 厨师长把我的锅锤烂了 问我是不是盐不要钱 他不知道的是我没有多放盐 只是炒菜的时候很想你 眼泪掉进了锅里[大哭]',
+        },
+        {
+          comment:
+            'XX最近的视频质量有所下降啊，无论是视频剪辑还是配音，都没有之前好，这边建议加我微信，给你指点一下[doge]',
+        },
+        {
+          comment:
+            '长相身材还可以，但没有故事，视频不能引起观众感情上的共鸣。这些主要还是阅历浅的缘故，所以在表达上欠缺。如果真的想有所发展的话，可以私聊我vx，我可以给你一场撕心裂肺的恋情，帮助你做出更好的作品',
+        },
+        {
+          comment:
+            '拙荆献丑了',
+        },
+        {
+          comment:
+            'XX！说实话，你的气质形象这么好，但是现在关注量却涨的不快了，应该是不太会整活。看你的面容，就应该整生活记录这种路数，那么建议你出一期我和你的约会视频，记录一下你的约会内容和我追上你的经验分享给网友，肯定可以火的。',
+        },
+        {
+          comment:
+            `XX，我把我的心取出来给你
+            [哈欠]→[抓狂]→[给心心]
+            我还能把它放回去
+            [给心心]→[偷笑]→[害羞]
+            我再给你演示一遍
+            [哈欠]→[抓狂]→[抓狂]→[抓狂]
+            咦，我的心呢[难过]
+            原来是你把我的心偷走了[大哭]`,
         },
       ],
     },
     {
-      tabName: '无人区',
+      tabName: '这里是评论区不是无人区',
       children: [{ comment: '' }],
     },
     {
@@ -22,15 +48,15 @@ export const storageComments = useStorageLocal(
       children: [{ comment: '' }],
     },
     {
-      tabName: 'ik',
+      tabName: 'ikun',
       children: [
-        { comment: '只因', previewImgPath: 'xxx' },
-        { comment: '小黑子', previewImgPath: '' },
+        { comment: '只因' },
+        { comment: '小黑子'},
       ],
     },
     {
       tabName: '回复',
-      children: [{ comment: 'XX+10度', previewImgPath: 'xxx' }],
+      children: [{ comment: 'XX+10度' }],
     },
   ],
   {

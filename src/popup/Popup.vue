@@ -1,9 +1,38 @@
 <script setup lang="ts">
 import type { TabPaneName } from 'element-plus'
-import { ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
+import { ElInput, ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
 import { useClipboard } from '@vueuse/core'
 import { onMessage, sendMessage } from 'webext-bridge'
+import emojiJson from '../assets/emoji.json'
 import { storageComments as storageDemo } from '~/logic/storage'
+const emoteList = emojiJson.data.packages.map(item => item.emote).flat()
+// console.log(emoteList)
+
+function transformEmoji(comment: string) {
+  // 替换emoji
+  console.log(comment)
+  // const needTransform2EmojiString = comment.match(/^[.*]$/g)
+  // 以[开头，碰见第一个]
+  const regex = /\[(\w)*|(\u{hhhh})*\]/gimu
+  const commentMatchList = comment.match(regex)
+  console.log(commentMatchList)
+
+  // function findPic(matchStr: string) {
+  //   console.log(matchStr)
+  // }
+  // const replacedComment = comment.replace(/^([.*])$/, findPic('$&'))
+
+  // <img src={findPic($1)}></img>
+  return comment
+}
+transformEmoji(`XX，我把我的心取出来给你
+            [哈欠]→[抓狂]→[给心心]
+            我还能把它放回去
+            [给心心]→[偷笑]→[害羞]
+            我再给你演示一遍
+            [哈欠]→[抓狂]→[抓狂]→[抓狂]
+            咦，我的心呢[难过]
+            原来是你把我的心偷走了[大哭]`)
 
 async function copyComment(comment: string) {
   // 获取当前页面的id并发送请求
@@ -25,6 +54,7 @@ async function copyComment(comment: string) {
 }
 
 function addComment(children: any[]) {
+  //  dialog 支持空格
   ElMessageBox.prompt('Please input 评论', 'Tip', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
@@ -106,7 +136,10 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
             :content="subItem.comment"
             placement="bottom-end"
           >
-            <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap"> {{ subIndex + 1 }}:  {{ subItem.comment }}</span>
+            <!-- {{ subIndex + 1 }}: <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">
+              {{ transformEmoji(subItem.comment) }}
+            </span> -->
+            <!-- emoji的展示 -->
           </el-tooltip>
           <button class="btn mx-1" @click="copyComment(subItem.comment)">
             复制
