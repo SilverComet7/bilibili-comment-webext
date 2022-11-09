@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { upNameAliasList } from '~/logic/storage'
 function deleteAlias(key: string) {
-  delete upNameAliasList.value[key]
+  delete (upNameAliasList.value)[key]
 }
 // const list = reactive([{ upName: 't', aliasName: 'test' }])
 </script>
@@ -9,7 +9,6 @@ function deleteAlias(key: string) {
 <template>
   <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
     别名:
-    <!-- <TableReward v-model="list" /> -->
     <div v-for="(value, key) in upNameAliasList" :key="value" class="my-2">
       {{ key }}---------{{ value }}   <button class="btn bg-red-500" @click="deleteAlias(key)">
         删除

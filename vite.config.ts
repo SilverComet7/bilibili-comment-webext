@@ -4,7 +4,7 @@ import { dirname, relative } from 'path'
 import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
+// import vueJsx from '@vitejs/plugin-vue-jsx'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
@@ -27,7 +27,7 @@ export const sharedConfig: UserConfig = {
   },
   plugins: [
     Vue(),
-    vueJsx(),
+    // vueJsx(),
     AutoImport({
       imports: [
         'vue',

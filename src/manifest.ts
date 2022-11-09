@@ -15,7 +15,7 @@ export async function getManifest() {
     description: pkg.description,
 
     action: {
-      default_icon: './assets/icon-512.png',
+      default_icon: './assets/bilibili-comment-96.png',
       default_popup: './dist/popup/index.html',
     },
     options_ui: {
@@ -26,9 +26,9 @@ export async function getManifest() {
       service_worker: './dist/background/index.mjs',
     },
     icons: {
-      16: './assets/icon-512.png',
-      48: './assets/icon-512.png',
-      128: './assets/icon-512.png',
+      16: './assets/bilibili-comment-96.png',
+      48: './assets/bilibili-comment-96.png',
+      128: './assets/bilibili-comment-96.png',
     },
     permissions: [
       'tabs',
