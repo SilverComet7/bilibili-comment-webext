@@ -1,6 +1,6 @@
 {
-  "name": "bilibili-comment",
-  "displayName": "bilibili-comment",
+  "name": "bilibili-comment-ext",
+  "displayName": "bilibili-comment-ext",
   "version": "0.0.1",
   "description": "帮助用户快速筛选并使用评论模板进行评论,让喜爱的up迅速眼熟于你",
   "private": true,

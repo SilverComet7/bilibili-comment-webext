@@ -1,19 +1,22 @@
 <script setup lang="ts">
-// import { storageDemo } from '~/logic/storage'
-const upAliasList = reactive({ 鱼香不吐司: '小橘子', Tacica鳥: '小橘子', 落九川: '九川' }) // 别名列表
+import { upNameAliasList } from '~/logic/storage'
+function deleteAlias(key: string) {
+  delete upNameAliasList.value[key]
+}
+// const list = reactive([{ upName: 't', aliasName: 'test' }])
 </script>
 
 <template>
   <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
     别名:
-    <div v-for="(value, key) in upAliasList" :key="value" class="my-2">
-      {{ key }}---------{{ value }}
+    <!-- <TableReward v-model="list" /> -->
+    <div v-for="(value, key) in upNameAliasList" :key="value" class="my-2">
+      {{ key }}---------{{ value }}   <button class="btn bg-red-500" @click="deleteAlias(key)">
+        删除
+      </button>
     </div>
-    <!-- <div class="opacity-0">
-      Storage:{{ storageDemo[0].t1 }}
-    </div>
-    <div v-for="(item) in storageDemo" :key="item.t1" class="my-2">
-      {{ item.t1 }}
-    </div> -->
+    <!-- <button class="btn mt-2" @click="addAlias(item.children)">
+      添加别名
+    </button> -->
   </main>
 </template>

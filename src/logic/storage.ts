@@ -41,17 +41,17 @@ export const storageComments = useStorageLocal(
     },
     {
       tabName: '这里是评论区不是无人区',
-      children: [{ comment: '' }],
+      children: [{ comment: '1' }],
     },
     {
       tabName: '原神',
-      children: [{ comment: '' }],
+      children: [{ comment: '2' }],
     },
     {
       tabName: 'ikun',
       children: [
         { comment: '只因' },
-        { comment: '小黑子'},
+        { comment: '小黑子' },
       ],
     },
     {
@@ -64,4 +64,6 @@ export const storageComments = useStorageLocal(
   },
 )
 
-// export const storageAlias = useStorageLocal('up-alias')
+export const upNameAliasList = useStorageLocal('up-alias', { 鱼香不吐司: '小橘子', Tacica鳥: '小橘子', 落九川: '九川' }, {
+  listenToStorageChanges: true,
+})

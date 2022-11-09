@@ -6,36 +6,25 @@ import { onMessage, sendMessage } from 'webext-bridge'
 import emojiJson from '../assets/emoji.json'
 import { storageComments as storageDemo } from '~/logic/storage'
 const emoteList = emojiJson.data.packages.map(item => item.emote).flat()
-// console.log(emoteList)
 
 function transformEmoji(comment: string) {
   // 替换emoji
-  console.log(comment)
   // const needTransform2EmojiString = comment.match(/^[.*]$/g)
-  // 以[开头，碰见第一个]
-  const regex = /\[(\w)*|(\u{hhhh})*\]/gimu
-  const commentMatchList = comment.match(regex)
-  console.log(commentMatchList)
+  // const regex = /\[[\u4E00-\u9FA5\w]*\]/g
+  // const commentMatchList = comment.match(regex)
+  // console.log(commentMatchList)
 
-  // function findPic(matchStr: string) {
-  //   console.log(matchStr)
-  // }
-  // const replacedComment = comment.replace(/^([.*])$/, findPic('$&'))
-
-  // <img src={findPic($1)}></img>
-  return comment
+  function findPic(matchStr: string) {
+    const emojiItem = emoteList?.find(item => item.text === matchStr)?.url
+    return `<img src="${emojiItem}" class="w-[20px] h-[20px] inline">`
+  }
+  const replacedComment = comment.replace(/\[[\u4E00-\u9FA5\w]*\]/g, findPic)
+  return replacedComment
 }
-transformEmoji(`XX，我把我的心取出来给你
-            [哈欠]→[抓狂]→[给心心]
-            我还能把它放回去
-            [给心心]→[偷笑]→[害羞]
-            我再给你演示一遍
-            [哈欠]→[抓狂]→[抓狂]→[抓狂]
-            咦，我的心呢[难过]
-            原来是你把我的心偷走了[大哭]`)
 
 async function copyComment(comment: string) {
   // 获取当前页面的id并发送请求
+
   browser.tabs.query({ active: true, currentWindow: true }).then(async (tabs) => {
     const tab = tabs[0]
     await sendMessage('getUpName', { title: tab.title, tabId: tab.id! }, { context: 'content-script', tabId: tab.id! })
@@ -131,16 +120,18 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
     <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
       <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
         <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">
-          <el-tooltip
+          <!-- <el-tooltip
             effect="dark"
             :content="subItem.comment"
             placement="bottom-end"
-          >
-            <!-- {{ subIndex + 1 }}: <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">
+          > -->
+          <!-- {{ subIndex + 1 }}: <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">
               {{ transformEmoji(subItem.comment) }}
             </span> -->
-            <!-- emoji的展示 -->
-          </el-tooltip>
+          <span class="h-[20px] mr-2">{{ subIndex + 1 }}</span>
+          <div v-html="transformEmoji(subItem.comment)" />
+          <!-- emoji的展示 -->
+          <!-- </el-tooltip> -->
           <button class="btn mx-1" @click="copyComment(subItem.comment)">
             复制
           </button>
@@ -155,3 +146,9 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
     </ElTabs>
   </main>
 </template>
+
+<style scss scoped>
+img{
+  display: inline;
+}
+</style>
