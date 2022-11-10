@@ -16,7 +16,7 @@ export const storageComments = useStorageLocal(
         },
         {
           comment:
-            '长相身材还可以，但没有故事，视频不能引起观众感情上的共鸣。这些主要还是阅历浅的缘故，所以在表达上欠缺。如果真的想有所发展的话，可以私聊我vx，我可以给你一场撕心裂肺的恋情，帮助你做出更好的作品',
+            'XX的长相身材还可以，但没有故事，视频不能引起观众感情上的共鸣。这些主要还是阅历浅的缘故，所以在表达上欠缺。如果真的想有所发展的话，可以私聊我vx，我可以给你一场撕心裂肺的恋情，帮助你做出更好的作品[脱单doge]',
         },
         {
           comment:
@@ -41,17 +41,18 @@ export const storageComments = useStorageLocal(
     },
     {
       tabName: '这里是评论区不是无人区',
-      children: [{ comment: '1' }],
+      children: [{ comment: '' }],
     },
     {
       tabName: '原神',
-      children: [{ comment: '2' }],
+      children: [{ comment: '我是纳西妲的狗' }],
     },
     {
       tabName: 'ikun',
       children: [
-        { comment: '只因' },
-        { comment: '小黑子' },
+        { comment: '只因你太美' },
+        { comment: '小黑子是不是有病' },
+        { comment: 'ikun提高班-铁山靠' },
       ],
     },
     {
