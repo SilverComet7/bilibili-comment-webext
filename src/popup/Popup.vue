@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { TabPaneName } from 'element-plus'
-import { ElInput, ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
+import { ElAlert, ElInput, ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
 import { useClipboard } from '@vueuse/core'
 import { onMessage, sendMessage } from 'webext-bridge'
 import emojiJson from '../assets/emoji.json'
-import { storageComments as storageDemo } from '~/logic/storage'
+import { storageComments as storageDemo, upNameAliasList } from '~/logic/storage'
 const emoteList = emojiJson.data.packages.map(item => item.emote).flat()
 
 function transformEmoji(comment: string) {
@@ -31,12 +31,15 @@ async function copyComment(comment: string) {
   })
   onMessage('sendUpName', (res) => {
     // 接受到当前up的名称
-    const upName: string = (res.data as any)?.upName
+    let upName: string = (res.data as any)?.upName
+    if (upNameAliasList.value[upName])
+      upName = upNameAliasList.value[upName] // 替换别名
+
     const replacedComment = comment.replace('XX', upName)
     const { copy } = useClipboard({ source: replacedComment })
     copy()
     if (upName)
-      ElMessage.warning({ message: `复制成功-----${replacedComment}`, duration: 2000 })
+      ElMessage.warning({ message: `复制成功请确认-----${replacedComment}`, duration: 3000 })
     else
       ElMessage.error('未获取到当前页面up名字,请移动到具体播放页面')
   })
@@ -117,6 +120,7 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
 
 <template>
   <main class="w-[800px] h-[400px] overflow-scroll px-4 py-5">
+    <el-alert title="如果存在XX字符，会在复制的时候获取当前页面up主名称替换" type="info" />
     <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
       <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
         <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">
