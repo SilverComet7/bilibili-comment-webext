@@ -120,7 +120,7 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
 
 <template>
   <main class="w-[800px] h-[400px] overflow-scroll px-4 py-5">
-    <el-alert title="提示:  如果存在XX字符，会在复制的时候获取当前页面up主名称替换" type="warning" />
+    <el-alert title="tips:  如果存在XX字符，会在复制的时候获取当前页面up主名称替换" type="warning" />
     <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
       <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
         <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">
@@ -133,8 +133,8 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
               {{ transformEmoji(subItem.comment) }}
             </span> -->
           <span class="h-[20px] mr-2">{{ subIndex + 1 }}</span>
-          <div v-html="transformEmoji(subItem.comment)" />
           <!-- emoji的展示 -->
+          <div v-html="transformEmoji(subItem.comment)" />
           <!-- </el-tooltip> -->
           <button class="btn mx-1" @click="copyComment(subItem.comment)">
             复制
