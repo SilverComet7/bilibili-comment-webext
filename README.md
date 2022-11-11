@@ -1,8 +1,14 @@
 # [产品整体设计](https://www.wolai.com/vjJXnhH4jPrAe1KktTU84P)
 
-<!-- # 使用案例：example -->
+# example
 
-# 功能特性：Features
+<!-- <p align="center">
+<sub>使用别名</sub><br/>
+<img width="655" src="../bilibili-comment/assets/别名.gif"><br/>
+<sub>添加分组与评论</sub><br/>
+</p> -->
+
+# Features
 
 1. 复制时自动替换当前页面的 up 主名称
 2. 自定义分组--使用区分场景
