@@ -3,10 +3,11 @@
 # 使用
 
 <p align="center">
+<img  src="./assets/bilibili-comment-96.png"><br/>
 <sub>添加分组与添加评论</sub><br/>
-<img width="655" src="../bilibili-comment/assets/分组与添加评论.gif"><br/>
-<sub>使用别名可根据当前up主名字</sub><br/>
-<img width="655" src="../bilibili-comment/assets/别名.gif"><br/>
+<img width="655" src="./assets/分组与添加评论.gif"><br/>
+<sub>使用别名</sub><br/>
+<img width="655" src="./assets/别名.gif"><br/>
 </p>
 
 # Features
