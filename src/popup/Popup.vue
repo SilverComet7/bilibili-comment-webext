@@ -5,32 +5,32 @@ import { useClipboard } from '@vueuse/core'
 import { onMessage, sendMessage } from 'webext-bridge'
 import emojiJson from '../assets/emoji.json'
 import { storageComments as storageDemo, upNameAliasList } from '~/logic/storage'
-const emoteList = emojiJson.data.packages.map(item => item.emote).flat()
 
+// 替换emoji
+const emoteList = emojiJson.data.packages.map(item => item.emote).flat() // json文件从B战接口中复制过来，为方便使用先进行flat打平
 function transformEmoji(comment: string) {
-  // 替换emoji
   function findPic(matchStr: string) {
     const emojiItem = emoteList?.find(item => item.text === matchStr)?.url
     return `<img src="${emojiItem}" class="w-[20px] h-[20px] inline">`
   }
-  const replacedComment = comment.replace(/\[[\u4E00-\u9FA5\w]*\]/g, findPic)
+  const replacedComment = comment.replace(/\[[\u4E00-\u9FA5\w]*\]/g, findPic) // 替换所有[xx]类型的文字为emoji
   return replacedComment
 }
-
 async function copyComment(comment: string) {
-  // 获取当前页面的id并发送请求
-
+  //  每一个页签都是一个实例，所以我们要获取到当前页的ID
   browser.tabs.query({ active: true, currentWindow: true }).then(async (tabs) => {
     const tab = tabs[0]
+    //   获取当前页面的id并发送获取up账号名称请求
     await sendMessage('getUpName', { title: tab.title, tabId: tab.id! }, { context: 'content-script', tabId: tab.id! })
   })
   onMessage('sendUpName', (res) => {
-    // 接受到当前up的名称
+    // 接收到当前up的账号名称
     let upName: string = (res.data as any)?.upName
-    if (upNameAliasList.value[upName])
-      upName = upNameAliasList.value[upName] // 替换别名
+    const upNameAlias = upNameAliasList.value[upName]
+    if (upNameAlias) // 如果存在映射则替换别名
+      upName = upNameAlias
 
-    const replacedComment = comment.replace('XX', upName)
+    const replacedComment = comment.replace('XX', upName) // 替换最后的upName
     const { copy } = useClipboard({ source: replacedComment })
     copy()
     if (upName)
@@ -71,9 +71,9 @@ function deleteComment(children: any[], cIndex: number) {
     })
 }
 
-// tab操作
+// tabs页签操作
 const editableTabsValue = ref('土味情话')
-const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add') => {
+const handleTabsEdit = async (targetName: TabPaneName | undefined, action: 'remove' | 'add') => {
   if (action === 'add') {
     ElMessageBox.prompt('Please input 分组名称', 'Tip', {
       confirmButtonText: 'OK',
@@ -122,7 +122,6 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
           <span class="h-[20px] mr-2">{{ subIndex + 1 }}</span>
           <!-- emoji的展示 -->
           <div v-html="transformEmoji(subItem.comment)" />
-          <!-- </el-tooltip> -->
           <button class="btn mx-1" @click="copyComment(subItem.comment)">
             复制
           </button>

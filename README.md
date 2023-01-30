@@ -1,5 +1,6 @@
-# [整体设计](https://www.wolai.com/vjJXnhH4jPrAe1KktTU84P)
+# 介绍
 
+帮助用户快速筛选并使用评论模板进行留言，上热评，让喜爱的up迅速眼熟于你
 # 使用
 
 <p align="center">
@@ -10,7 +11,7 @@
 <sub>使用别名</sub><br/>
 </p>
 
-# Features
+# 特性
 
 1. 自定义分组
 2. 支持 B 站 4 种基础 emoji 预览，方便查看最终的评论效果
