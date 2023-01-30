@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TabPaneName } from 'element-plus'
-import { ElAlert, ElInput, ElMessage, ElMessageBox, ElTabPane, ElTabs, ElTooltip } from 'element-plus'
+import { ElAlert, ElMessage, ElMessageBox, ElTabPane, ElTabs } from 'element-plus'
 import { useClipboard } from '@vueuse/core'
 import { onMessage, sendMessage } from 'webext-bridge'
 import emojiJson from '../assets/emoji.json'
@@ -9,11 +9,6 @@ const emoteList = emojiJson.data.packages.map(item => item.emote).flat()
 
 function transformEmoji(comment: string) {
   // 替换emoji
-  // const needTransform2EmojiString = comment.match(/^[.*]$/g)
-  // const regex = /\[[\u4E00-\u9FA5\w]*\]/g
-  // const commentMatchList = comment.match(regex)
-  // console.log(commentMatchList)
-
   function findPic(matchStr: string) {
     const emojiItem = emoteList?.find(item => item.text === matchStr)?.url
     return `<img src="${emojiItem}" class="w-[20px] h-[20px] inline">`
@@ -120,18 +115,10 @@ const handleTabsEdit = async (targetName: TabPaneName, action: 'remove' | 'add')
 
 <template>
   <main class="w-[800px] h-[400px] overflow-scroll px-4 py-5">
-    <el-alert title="tips:  如果存在XX字符，会在复制的时候获取当前页面up主名称替换" type="warning" />
+    <el-alert title="tips:  XX字符会在复制的时候获取当前页面up主名称替换" type="warning" />
     <ElTabs v-model="editableTabsValue" editable type="border-card" @edit="handleTabsEdit">
       <ElTabPane v-for="(item) in storageDemo" :key="item.tabName" :label="item.tabName" :name="item.tabName">
         <div v-for="(subItem, subIndex) in item.children" :key="subItem.comment" class="flex items-center py-1">
-          <!-- <el-tooltip
-            effect="dark"
-            :content="subItem.comment"
-            placement="bottom-end"
-          > -->
-          <!-- {{ subIndex + 1 }}: <span class="max-w-[650px]  inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {{ transformEmoji(subItem.comment) }}
-            </span> -->
           <span class="h-[20px] mr-2">{{ subIndex + 1 }}</span>
           <!-- emoji的展示 -->
           <div v-html="transformEmoji(subItem.comment)" />

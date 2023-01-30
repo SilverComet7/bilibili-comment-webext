@@ -5,7 +5,7 @@ async function deleteAlias(key: string) {
   await ElMessageBox.confirm('确认删除?')
   delete (upNameAliasList.value)[key]
 }
-function addAlias(params: type) {
+function addAlias() {
   let upName = ''
   ElMessageBox.prompt('up主名称', 'Tip', {
     confirmButtonText: 'OK',
@@ -34,12 +34,11 @@ function addAlias(params: type) {
       })
     })
 }
-// const list = reactive([{ upName: 't', aliasName: 'test' }])
 </script>
 
 <template>
   <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    所有up主别名:
+    up主别名设置:
     <div v-for="(value, key) in upNameAliasList" :key="value" class="my-2">
       {{ key }}---------{{ value }}   <button class="btn bg-red-500" @click="deleteAlias(key)">
         删除
