@@ -1,6 +1,8 @@
 # 介绍
-
 帮助用户快速筛选并使用评论模板进行留言，上热评，让喜爱的up迅速眼熟于你
+
+# 设计思路
+[wolai笔记记录页](https://www.wolai.com/vjJXnhH4jPrAe1KktTU84P)
 # 使用
 
 <p align="center">
